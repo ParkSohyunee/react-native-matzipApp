@@ -1,11 +1,11 @@
 // 인증 홈 화면
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {Dimensions, Image, SafeAreaView, StyleSheet, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 
-import {AuthStackParamListType} from '../../navigations/stack/AuthStackNavigator';
-import {authNavigators} from '../../../constants';
-import CustomButton from '../../CustomButton';
+import {AuthStackParamListType} from '../../components/navigations/stack/AuthStackNavigator';
+import {authNavigators} from '../../constants';
+import CustomButton from '../../components/CustomButton';
 
 // (Reference) https://reactnavigation.org/docs/typescript/#type-checking-screens
 type AuthHomeScreenProps = StackScreenProps<
@@ -17,8 +17,15 @@ type AuthHomeScreenProps = StackScreenProps<
 // (Navigation prop reference) https://reactnavigation.org/docs/navigation-prop
 export default function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
   return (
-    <SafeAreaView>
-      <View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image
+          resizeMode="contain"
+          style={styles.image}
+          source={require('../../assets/matzip.png')}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
         <CustomButton
           label="로그인하기"
           invalid={false}
@@ -34,3 +41,24 @@ export default function AuthHomeScreen({navigation}: AuthHomeScreenProps) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 30,
+    alignItems: 'center',
+  },
+  imageContainer: {
+    flex: 1.5,
+    width: Dimensions.get('screen').width / 2,
+  },
+  buttonContainer: {
+    flex: 1,
+    gap: 10,
+    width: '100%',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+});
