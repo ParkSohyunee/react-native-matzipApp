@@ -5,7 +5,7 @@ import AuthHomeScreen from '../../screens/auth/AuthHomeScreen';
 import LoginScreen from '../../screens/auth/LoginScreen';
 import SignupScreen from '../../screens/auth/SignupScreen';
 
-import {authNavigators} from '../../../constants';
+import {authNavigators} from '../../../constants/navigations';
 
 export type AuthStackParamListType = {
   [authNavigators.AUTH_HOME]: undefined;
