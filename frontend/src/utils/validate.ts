@@ -5,8 +5,7 @@ type UserLoginInfo = {
 
 const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
 
-// 에러 객체를 리턴하는 유효성 검사 함수
-export function validateLogin(inputs: UserLoginInfo) {
+const validateUser = (inputs: UserLoginInfo) => {
   const error = {
     email: '',
     password: '',
@@ -20,4 +19,22 @@ export function validateLogin(inputs: UserLoginInfo) {
   }
 
   return error; // ex) {email: '유효하지 않은 이메일입니다.'}
-}
+};
+
+// 에러 객체를 리턴하는 유효성 검사 함수
+const validateLogin = (inputs: UserLoginInfo) => {
+  return validateUser(inputs);
+};
+
+const validateSignUp = (inputs: UserLoginInfo & {passwordCheck: string}) => {
+  const errors = validateUser(inputs);
+  const signupErrors = {...errors, passwordCheck: ''};
+
+  if (inputs.passwordCheck !== inputs.password) {
+    signupErrors.passwordCheck = '비밀번호가 일치하지 않습니다.';
+  }
+
+  return signupErrors;
+};
+
+export {validateLogin, validateSignUp};
