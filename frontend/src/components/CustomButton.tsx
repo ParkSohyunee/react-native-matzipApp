@@ -21,7 +21,7 @@ export default function CustomButton({
   label,
   variant = 'filled',
   size = 'large',
-  invalid = true,
+  invalid = false,
   ...props
 }: CustomButtonProps) {
   /** (아래 주석처리된 코드)

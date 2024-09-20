@@ -10,6 +10,7 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 import RootNavigator from './src/components/navigations/root/RootNavigator';
+import {colors} from './src/constants';
 
 function App(): JSX.Element {
   return (
@@ -24,7 +25,7 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
+    backgroundColor: colors.WHITE,
   },
   input: {
     flex: 1,
