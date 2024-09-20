@@ -1,58 +1,47 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 
 import InputField from '../../components/InputField';
+import CustomButton from '../../components/CustomButton';
 
-interface LoginInputType {
-  email: string;
-  password: string;
-}
+import useForm from '../../components/hooks/useForm';
 
 export default function LoginScreen() {
-  const [inputs, setInputs] = useState<LoginInputType>({
-    email: '',
-    password: '',
-  });
-  const [touched, setTouched] = useState({
-    email: false,
-    password: false,
+  const {inputs, touched, getTextInputProps} = useForm({
+    initialState: {
+      email: '',
+      password: '',
+    },
   });
 
-  const handleChangeInputs = (name: string) => (text: string) => {
-    setInputs(prev => ({
-      ...prev,
-      [name]: text,
-    }));
-  };
-
-  const handleBlur = (name: string) => () => {
-    setTouched(prev => ({
-      ...prev,
-      [name]: true,
-    }));
+  // 로그인 폼 제출
+  const handleSubmit = () => {
+    console.log(inputs);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.inputContainer}>
         <InputField
-          value={inputs.email}
           inputMode="email" // determines which keyboard to open
           placeholder="이메일을 입력해주세요."
           errorMessage="이메일을 입력해주세요."
-          onChangeText={handleChangeInputs('email')}
-          onBlur={handleBlur('email')}
           touched={touched.email}
+          {...getTextInputProps('email')}
         />
         <InputField
-          value={inputs.password}
           placeholder="비밀번호를 입력해주세요."
           secureTextEntry
-          onChangeText={handleChangeInputs('password')}
-          onBlur={handleBlur('password')}
           touched={touched.password}
+          {...getTextInputProps('password')}
         />
       </View>
+      <CustomButton
+        label="로그인"
+        variant="filled"
+        size="large"
+        onPress={handleSubmit}
+      />
     </SafeAreaView>
   );
 }
@@ -64,5 +53,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     gap: 20,
+    marginBottom: 30,
   },
 });
