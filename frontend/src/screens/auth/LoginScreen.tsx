@@ -5,13 +5,12 @@ import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 
 import useForm from '../../components/hooks/useForm';
+import {validateLogin} from '../../utils';
 
 export default function LoginScreen() {
-  const {inputs, touched, getTextInputProps} = useForm({
-    initialState: {
-      email: '',
-      password: '',
-    },
+  const {inputs, touched, errors, getTextInputProps} = useForm({
+    initialState: {email: '', password: ''},
+    validate: validateLogin,
   });
 
   // 로그인 폼 제출
@@ -25,12 +24,13 @@ export default function LoginScreen() {
         <InputField
           inputMode="email" // determines which keyboard to open
           placeholder="이메일을 입력해주세요."
-          errorMessage="이메일을 입력해주세요."
+          errorMessage={errors.email}
           touched={touched.email}
           {...getTextInputProps('email')}
         />
         <InputField
           placeholder="비밀번호를 입력해주세요."
+          errorMessage={errors.password}
           secureTextEntry
           touched={touched.password}
           {...getTextInputProps('password')}
