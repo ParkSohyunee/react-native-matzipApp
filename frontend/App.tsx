@@ -8,17 +8,21 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
+import {QueryClientProvider} from '@tanstack/react-query';
 
 import RootNavigator from './src/components/navigations/root/RootNavigator';
 import {colors} from './src/constants';
+import queryClient from './src/api/queryClient';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
-    </SafeAreaView>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </SafeAreaView>
+    </QueryClientProvider>
   );
 }
 
@@ -26,20 +30,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.WHITE,
-  },
-  input: {
-    flex: 1,
-
-    borderWidth: 2,
-    borderColor: 'black',
-
-    height: 50,
-    width: 100,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 
