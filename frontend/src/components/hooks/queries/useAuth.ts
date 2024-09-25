@@ -11,13 +11,16 @@ import {
   postLogin,
   postSignup,
 } from '../../../api/auth';
+
 import {
   UseMutationCustomOptions,
   UseQueryCustomOptions,
 } from '../../../types/common';
+
 import {removeEncryptStorage, setEncryptStorage} from '../../../utils';
 import {removeHeader, setHeader} from '../../../utils/authHeader';
 import queryClient from '../../../api/queryClient';
+import {numbers, queryKeys, storageKeys} from '../../../constants';
 
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
@@ -30,12 +33,16 @@ function useLogin(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: postLogin,
     onSuccess: ({accessToken, refreshToken}) => {
-      setEncryptStorage('refreshToken', refreshToken);
+      setEncryptStorage(storageKeys.REFRESH_TOKEN, refreshToken);
       setHeader(`Bearer ${accessToken}`); // 로그인하면 헤더에 default 설정)
     },
     onSettled: () => {
-      queryClient.refetchQueries({queryKey: ['auth', 'getAccessToken']}); // 로그인 후 RT 옵션 실행을 위해
-      queryClient.invalidateQueries({queryKey: ['auth', 'getProfile']}); // 로그인 후 변경된 프로필 가져오기 위헤
+      queryClient.refetchQueries({
+        queryKey: [queryKeys.AUTH, queryKeys.GET_ACCESS_TOKEN],
+      }); // 로그인 후 RT 옵션 실행을 위해
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],
+      }); // 로그인 후 변경된 프로필 가져오기 위헤
     },
     ...mutationOptions,
   });
@@ -43,10 +50,10 @@ function useLogin(mutationOptions?: UseMutationCustomOptions) {
 
 function useGetRefreshToken() {
   const {data, isSuccess, isError} = useQuery({
-    queryKey: ['auth', 'getAccessToken'],
+    queryKey: [queryKeys.AUTH, queryKeys.GET_ACCESS_TOKEN],
     queryFn: getAccessToken,
-    staleTime: 1000 * 60 * 30 - 1000 * 60 * 3,
-    refetchInterval: 1000 * 60 * 30 - 1000 * 60 * 3,
+    staleTime: numbers.ACCESS_TOKEN_REFRESH_TIME,
+    refetchInterval: numbers.ACCESS_TOKEN_REFRESH_TIME,
     refetchOnReconnect: true,
     refetchIntervalInBackground: true,
   });
@@ -55,7 +62,7 @@ function useGetRefreshToken() {
   useEffect(() => {
     if (isSuccess) {
       const {accessToken, refreshToken} = data;
-      setEncryptStorage('refreshToken', refreshToken);
+      setEncryptStorage(storageKeys.REFRESH_TOKEN, refreshToken);
       setHeader(`Bearer ${accessToken}`); // 로그인하면 헤더에 default 설정)
     }
   }, [isSuccess, data]);
@@ -63,7 +70,7 @@ function useGetRefreshToken() {
   // useQuery 후 onError 상태일 때
   useEffect(() => {
     if (isError) {
-      removeEncryptStorage('refreshToken');
+      removeEncryptStorage(storageKeys.REFRESH_TOKEN);
       removeHeader();
     }
   }, [isError]);
@@ -73,7 +80,7 @@ function useGetRefreshToken() {
 
 function useGetProfile(queryOptions?: UseQueryCustomOptions) {
   return useQuery({
-    queryKey: ['auth', 'getProfile'],
+    queryKey: [queryKeys.AUTH, queryKeys.GET_PROFILE],
     queryFn: getProfile,
     ...queryOptions,
   });
@@ -83,11 +90,11 @@ function useLogout(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      removeEncryptStorage('refreshToken');
+      removeEncryptStorage(storageKeys.REFRESH_TOKEN);
       removeHeader();
     },
     onSettled: () => {
-      queryClient.invalidateQueries({queryKey: ['auth']}); // 로그아웃 후 auth에 해당하는 쿼리 무효화
+      queryClient.invalidateQueries({queryKey: [queryKeys.AUTH]}); // 로그아웃 후 auth에 해당하는 쿼리 무효화
     },
     ...mutationOptions,
   });
