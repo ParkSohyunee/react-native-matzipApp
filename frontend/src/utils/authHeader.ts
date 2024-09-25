@@ -1,6 +1,6 @@
 // authorization header default 설정 유틸 함수
 
-import axiosInstance from '../api/axios';
+import axiosInstance from '@/api/axios';
 
 function setHeader(value: string) {
   axiosInstance.defaults.headers.common['Authorization'] = value;

@@ -1,9 +1,8 @@
 import React from 'react';
 
+import useAuth from '@/components/hooks/queries/useAuth';
 import DrawerMenuNavigator from '../drawer/DrawerMenuNavigator';
 import AuthStackNavigator from '../stack/AuthStackNavigator';
-
-import useAuth from '../../hooks/queries/useAuth';
 
 interface RootNavigatorProps {}
 

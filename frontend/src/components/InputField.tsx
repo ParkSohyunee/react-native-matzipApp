@@ -9,8 +9,8 @@ import {
   View,
 } from 'react-native';
 
-import {colors} from '../constants';
-import {mergeRefs} from '../utils';
+import {colors} from '@/constants';
+import {mergeRefs} from '@/utils';
 
 interface InputFieldProps extends TextInputProps {
   disabled?: boolean;

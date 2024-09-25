@@ -3,9 +3,9 @@ import React from 'react';
 import {Dimensions, Image, SafeAreaView, StyleSheet, View} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 
-import {AuthStackParamListType} from '../../components/navigations/stack/AuthStackNavigator';
-import {authNavigators} from '../../constants';
-import CustomButton from '../../components/CustomButton';
+import {authNavigators} from '@/constants';
+import {AuthStackParamListType} from '@/components/navigations/stack/AuthStackNavigator';
+import CustomButton from '@/components/CustomButton';
 
 // (Reference) https://reactnavigation.org/docs/typescript/#type-checking-screens
 type AuthHomeScreenProps = StackScreenProps<

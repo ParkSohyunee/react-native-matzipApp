@@ -10,17 +10,13 @@ import {
   logout,
   postLogin,
   postSignup,
-} from '../../../api/auth';
+} from '@/api/auth';
 
-import {
-  UseMutationCustomOptions,
-  UseQueryCustomOptions,
-} from '../../../types/common';
-
-import {removeEncryptStorage, setEncryptStorage} from '../../../utils';
-import {removeHeader, setHeader} from '../../../utils/authHeader';
-import queryClient from '../../../api/queryClient';
-import {numbers, queryKeys, storageKeys} from '../../../constants';
+import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/types/common';
+import {setHeader, removeHeader} from '@/utils/authHeader';
+import {removeEncryptStorage, setEncryptStorage} from '@/utils';
+import queryClient from '@/api/queryClient';
+import {numbers, queryKeys, storageKeys} from '@/constants';
 
 function useSignup(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
