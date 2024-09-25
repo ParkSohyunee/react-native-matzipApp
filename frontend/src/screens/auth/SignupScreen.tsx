@@ -6,10 +6,12 @@ import CustomButton from '../../components/CustomButton';
 
 import useForm from '../../components/hooks/useForm';
 import {validateSignUp} from '../../utils';
+import useAuth from '../../components/hooks/queries/useAuth';
 
 interface SignupScreenProps {}
 
 export default function SignupScreen({}: SignupScreenProps) {
+  const {signupMutation, loginMutation} = useAuth();
   const passwordRef = useRef<TextInput>(null);
   const passwordCheckRef = useRef<TextInput>(null);
 
@@ -19,7 +21,12 @@ export default function SignupScreen({}: SignupScreenProps) {
   });
 
   const handleSubmit = () => {
-    console.log(inputs);
+    const {email, password} = inputs;
+
+    signupMutation.mutate(
+      {email, password},
+      {onSuccess: () => loginMutation.mutate({email, password})},
+    );
   };
 
   return (

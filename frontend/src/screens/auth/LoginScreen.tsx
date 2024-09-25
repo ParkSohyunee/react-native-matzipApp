@@ -6,8 +6,10 @@ import CustomButton from '../../components/CustomButton';
 
 import useForm from '../../components/hooks/useForm';
 import {validateLogin} from '../../utils';
+import useAuth from '../../components/hooks/queries/useAuth';
 
 export default function LoginScreen() {
+  const {loginMutation} = useAuth();
   const passwordRef = useRef<TextInput>(null);
 
   const {inputs, touched, errors, getTextInputProps} = useForm({
@@ -17,7 +19,10 @@ export default function LoginScreen() {
 
   // 로그인 폼 제출
   const handleSubmit = () => {
-    console.log(inputs);
+    loginMutation.mutate({
+      email: inputs.email,
+      password: inputs.password,
+    });
   };
 
   return (
