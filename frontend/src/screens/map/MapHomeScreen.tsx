@@ -1,16 +1,22 @@
 import React from 'react';
-import {Button, Text, View} from 'react-native';
-import useAuth from '@/components/hooks/queries/useAuth';
+import {StyleSheet} from 'react-native';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 interface MapHomeScreenProps {}
 
 export default function MapHomeScreen({}: MapHomeScreenProps) {
-  const {logoutMutation} = useAuth();
-
   return (
-    <View>
-      <Text>맵 스크린</Text>
-      <Button onPress={() => logoutMutation.mutate(null)} title="로그아웃" />
-    </View>
+    <MapView
+      style={styles.container}
+      provider={PROVIDER_GOOGLE}
+      showsUserLocation
+      showsMyLocationButton={false}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
