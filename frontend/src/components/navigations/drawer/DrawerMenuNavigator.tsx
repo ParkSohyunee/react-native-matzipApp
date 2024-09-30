@@ -1,18 +1,50 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import MapHomeScreen from '@/screens/map/MapHomeScreen';
 import FeedScreen from '@/screens/feed/FeedScreen';
 import CalendarScreen from '@/screens/calendar/Calendar';
+import MapStackNavigator, {
+  MapStackParamListType,
+} from '../stack/MapStackNavigator';
+import {mainNavigators} from '@/constants';
+import {NavigatorScreenParams} from '@react-navigation/native';
 
-const Drawer = createDrawerNavigator();
+export type MainDrawerParamListType = {
+  [mainNavigators.HOME]: NavigatorScreenParams<MapStackParamListType>;
+  [mainNavigators.FEED]: undefined;
+  [mainNavigators.CALENDER]: undefined;
+};
+
+const Drawer = createDrawerNavigator<MainDrawerParamListType>();
 
 export default function DrawerMenuNavigator() {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="MapHome" component={MapHomeScreen} />
-      <Drawer.Screen name="Feed" component={FeedScreen} />
-      <Drawer.Screen name="Calendar" component={CalendarScreen} />
+    <Drawer.Navigator
+      screenOptions={{
+        drawerType: 'front',
+        headerShown: false,
+      }}>
+      <Drawer.Screen
+        name={mainNavigators.HOME}
+        component={MapStackNavigator}
+        options={{
+          title: '홈',
+        }}
+      />
+      <Drawer.Screen
+        name={mainNavigators.FEED}
+        component={FeedScreen}
+        options={{
+          title: '피드',
+        }}
+      />
+      <Drawer.Screen
+        name={mainNavigators.CALENDER}
+        component={CalendarScreen}
+        options={{
+          title: '캘린더',
+        }}
+      />
     </Drawer.Navigator>
   );
 }
