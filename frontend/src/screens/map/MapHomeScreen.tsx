@@ -1,16 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 
-import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {MainDrawerParamListType} from '@/components/navigations/drawer/DrawerMenuNavigator';
 import {MapStackParamListType} from '@/components/navigations/stack/MapStackNavigator';
 import {colors} from '@/constants';
-import Geolocation from '@react-native-community/geolocation';
+import useUserLocation from '@/components/hooks/useUserLocation';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamListType>,
@@ -20,12 +20,8 @@ type Navigation = CompositeNavigationProp<
 export default function MapHomeScreen() {
   const inset = useSafeAreaInsets();
   const navigation = useNavigation<Navigation>();
-  const [userLocation, setUserLocation] = useState<LatLng>({
-    latitude: 37.5516032365118,
-    longitude: 126.98989626020192,
-  });
-  const [isUserLocationError, setIsUserLocationError] = useState(false);
   const mapRef = useRef<MapView | null>(null);
+  const {userLocation, isUserLocationError} = useUserLocation();
 
   const handlePressUserLocation = () => {
     // 사용자가 위치 권한을 거부한 경우 등 에러가 발생하는 경우
@@ -41,23 +37,6 @@ export default function MapHomeScreen() {
       latitudeDelta: 0.0421,
     });
   };
-
-  // 현재 위치를 구하기
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      info => {
-        const {latitude, longitude} = info.coords;
-        console.log(info, latitude, longitude);
-        setUserLocation({latitude, longitude});
-      },
-      () => {
-        setIsUserLocationError(true);
-      },
-      {
-        enableHighAccuracy: true, // GPS 사용 여부, false면 wifi location
-      },
-    );
-  }, []);
 
   return (
     <>
