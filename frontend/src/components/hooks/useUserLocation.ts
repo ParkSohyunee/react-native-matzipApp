@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {LatLng} from 'react-native-maps';
+import useAppState from './useAppState';
 
 /**
  * 사용자의 현재 위치를 구하는 훅
@@ -12,6 +13,9 @@ export default function useUserLocation() {
     longitude: 126.98989626020192,
   });
   const [isUserLocationError, setIsUserLocationError] = useState(false);
+  const {isComback} = useAppState();
+
+  // console.log('isComback', isComback);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -27,6 +31,7 @@ export default function useUserLocation() {
         enableHighAccuracy: true, // GPS 사용 여부, false면 wifi location
       },
     );
-  }, []);
+  }, [isComback]);
+
   return {userLocation, isUserLocationError};
 }
