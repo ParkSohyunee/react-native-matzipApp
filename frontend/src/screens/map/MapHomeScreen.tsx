@@ -23,7 +23,7 @@ export default function MapHomeScreen() {
   const navigation = useNavigation<Navigation>();
   const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
-  usePermission();
+  usePermission('LOCATION');
 
   const handlePressUserLocation = () => {
     // 사용자가 위치 권한을 거부한 경우 등 에러가 발생하는 경우
