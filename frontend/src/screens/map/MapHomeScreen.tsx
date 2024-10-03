@@ -11,6 +11,7 @@ import {MainDrawerParamListType} from '@/components/navigations/drawer/DrawerMen
 import {MapStackParamListType} from '@/components/navigations/stack/MapStackNavigator';
 import {colors} from '@/constants';
 import useUserLocation from '@/components/hooks/useUserLocation';
+import usePermission from '@/components/hooks/usePermission';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamListType>,
@@ -22,6 +23,7 @@ export default function MapHomeScreen() {
   const navigation = useNavigation<Navigation>();
   const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
+  usePermission();
 
   const handlePressUserLocation = () => {
     // 사용자가 위치 권한을 거부한 경우 등 에러가 발생하는 경우
