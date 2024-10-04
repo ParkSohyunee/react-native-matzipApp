@@ -30,6 +30,9 @@
 		00E356EE1AD99517003FC87E /* matzipAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = matzipAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* matzipAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = matzipAppTests.m; sourceTree = "<group>"; };
+		0B43B7352CAFC8AF00E9206F /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		0B43B7362CAFC8AF00E9206F /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		0B43B7372CAFC8AF00E9206F /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* matzipApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = matzipApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = matzipApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = matzipApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -83,9 +86,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0B43B7342CAFC6B100E9206F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0B43B7352CAFC8AF00E9206F /* Ionicons.ttf */,
+				0B43B7362CAFC8AF00E9206F /* MaterialIcons.ttf */,
+				0B43B7372CAFC8AF00E9206F /* Octicons.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* matzipApp */ = {
 			isa = PBXGroup;
 			children = (
+				0B43B7342CAFC6B100E9206F /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,

@@ -1,17 +1,20 @@
 import React, {useRef} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {MainDrawerParamListType} from '@/components/navigations/drawer/DrawerMenuNavigator';
 import {MapStackParamListType} from '@/components/navigations/stack/MapStackNavigator';
-import {colors} from '@/constants';
 import useUserLocation from '@/components/hooks/useUserLocation';
 import usePermission from '@/components/hooks/usePermission';
+
+import {colors} from '@/constants';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamListType>,
@@ -52,11 +55,11 @@ export default function MapHomeScreen() {
       <Pressable
         style={[styles.drawerButton, {top: inset.top || 20}]}
         onPress={() => navigation.openDrawer()}>
-        <Text>서랍</Text>
+        <Ionicons name="menu" size={24} color={colors.WHITE} />
       </Pressable>
       <View style={styles.buttonList}>
         <Pressable style={styles.mapButton} onPress={handlePressUserLocation}>
-          <Text>내 위치</Text>
+          <MaterialIcons name="my-location" size={25} color={colors.WHITE} />
         </Pressable>
       </View>
     </>
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
   buttonList: {
     position: 'absolute',
     bottom: 30,
-    right: 1,
+    right: 10,
   },
   mapButton: {
     backgroundColor: colors.PINK_700,
