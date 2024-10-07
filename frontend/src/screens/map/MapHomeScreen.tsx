@@ -15,6 +15,7 @@ import useUserLocation from '@/components/hooks/useUserLocation';
 import usePermission from '@/components/hooks/usePermission';
 
 import {colors} from '@/constants';
+import mapStyle from '@/style/mapStyle';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamListType>,
@@ -51,6 +52,7 @@ export default function MapHomeScreen() {
         provider={PROVIDER_GOOGLE}
         showsUserLocation
         showsMyLocationButton={false}
+        customMapStyle={mapStyle}
       />
       <Pressable
         style={[styles.drawerButton, {top: inset.top || 20}]}
