@@ -6,8 +6,9 @@ import CalendarScreen from '@/screens/calendar/Calendar';
 import MapStackNavigator, {
   MapStackParamListType,
 } from '../stack/MapStackNavigator';
-import {mainNavigators} from '@/constants';
-import {NavigatorScreenParams} from '@react-navigation/native';
+import {colors, mainNavigators} from '@/constants';
+import {NavigatorScreenParams, RouteProp} from '@react-navigation/native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export type MainDrawerParamListType = {
   [mainNavigators.HOME]: NavigatorScreenParams<MapStackParamListType>;
@@ -17,13 +18,41 @@ export type MainDrawerParamListType = {
 
 const Drawer = createDrawerNavigator<MainDrawerParamListType>();
 
+function DrawerIcons(
+  route: RouteProp<MainDrawerParamListType>,
+  focused: boolean,
+) {
+  let iconName = '';
+
+  switch (route.name) {
+    case mainNavigators.HOME:
+      iconName = 'location-on';
+      break;
+    case mainNavigators.FEED:
+      iconName = 'book';
+      break;
+    case mainNavigators.CALENDER:
+      iconName = 'event-note';
+      break;
+  }
+
+  return (
+    <MaterialIcons
+      name={iconName}
+      size={18}
+      color={focused ? colors.BLACK : colors.GRAY_500}
+    />
+  );
+}
+
 export default function DrawerMenuNavigator() {
   return (
     <Drawer.Navigator
-      screenOptions={{
+      screenOptions={({route}) => ({
         drawerType: 'front',
         headerShown: false,
-      }}>
+        drawerIcon: ({focused}) => DrawerIcons(route, focused),
+      })}>
       <Drawer.Screen
         name={mainNavigators.HOME}
         component={MapStackNavigator}
