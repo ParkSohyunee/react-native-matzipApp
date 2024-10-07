@@ -1,5 +1,8 @@
 import React from 'react';
+import {Dimensions} from 'react-native';
+import {NavigatorScreenParams, RouteProp} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import FeedScreen from '@/screens/feed/FeedScreen';
 import CalendarScreen from '@/screens/calendar/Calendar';
@@ -7,8 +10,7 @@ import MapStackNavigator, {
   MapStackParamListType,
 } from '../stack/MapStackNavigator';
 import {colors, mainNavigators} from '@/constants';
-import {NavigatorScreenParams, RouteProp} from '@react-navigation/native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import CustomDrawerContent from './CustomDrawerContent';
 
 export type MainDrawerParamListType = {
   [mainNavigators.HOME]: NavigatorScreenParams<MapStackParamListType>;
@@ -48,9 +50,21 @@ function DrawerIcons(
 export default function DrawerMenuNavigator() {
   return (
     <Drawer.Navigator
+      drawerContent={CustomDrawerContent}
       screenOptions={({route}) => ({
         drawerType: 'front',
         headerShown: false,
+        drawerStyle: {
+          width: Dimensions.get('screen').width * 0.6,
+          backgroundColor: colors.WHITE,
+        },
+        drawerActiveTintColor: colors.BLACK,
+        drawerInactiveTintColor: colors.GRAY_500,
+        drawerActiveBackgroundColor: colors.PINK_200,
+        drawerInactiveBackgroundColor: colors.GRAY_100,
+        drawerLabelStyle: {
+          fontWeight: '600',
+        },
         drawerIcon: ({focused}) => DrawerIcons(route, focused),
       })}>
       <Drawer.Screen
@@ -58,6 +72,7 @@ export default function DrawerMenuNavigator() {
         component={MapStackNavigator}
         options={{
           title: '홈',
+          swipeEnabled: false,
         }}
       />
       <Drawer.Screen
