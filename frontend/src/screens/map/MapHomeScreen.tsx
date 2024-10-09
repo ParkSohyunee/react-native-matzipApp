@@ -1,10 +1,16 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {
+  Callout,
+  LatLng,
+  LongPressEvent,
+  Marker,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -28,6 +34,12 @@ export default function MapHomeScreen() {
   const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
   usePermission('LOCATION');
+  const [selectedLocation, setSelectedLocation] = useState<LatLng>();
+
+  // 길게 눌렀을 때 지도 좌표를 구하는 이벤트 핸들러
+  const handleLongPressMapView = ({nativeEvent}: LongPressEvent) => {
+    setSelectedLocation(nativeEvent.coordinate);
+  };
 
   const handlePressUserLocation = () => {
     // 사용자가 위치 권한을 거부한 경우 등 에러가 발생하는 경우
@@ -53,7 +65,19 @@ export default function MapHomeScreen() {
         showsUserLocation
         showsMyLocationButton={false}
         customMapStyle={mapStyle}
+        onLongPress={handleLongPressMapView}
       />
+      <Marker
+        coordinate={{
+          latitude: 37.5516032365118,
+          longitude: 126.98989626020192,
+        }}
+      />
+      {selectedLocation && (
+        <Callout>
+          <Marker coordinate={selectedLocation} />
+        </Callout>
+      )}
       <Pressable
         style={[styles.drawerButton, {top: inset.top || 20}]}
         onPress={() => navigation.openDrawer()}>
