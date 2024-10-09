@@ -1,5 +1,6 @@
 export const colors = {
   PINK_200: '#FAE2E9',
+  PINK_400: '#EC87A5',
   PINK_700: '#C63B64',
   PINK_500: '#BF5C79',
   WHITE: '#ffff',
@@ -10,4 +11,8 @@ export const colors = {
   BLACK: '#161616', // 기본 텍스트 색상
   RED_300: '#FFB4B4', // 인풋 에러 border 상태
   RED_500: '#FF5F5F', // 인풋 에러 메세지, 옵션 버튼 text
+  BLUE_400: '#B4E0FF',
+  YELLOW_400: '#FFE594',
+  PURPLE_400: '#C4C4E7',
+  GREEN_400: 'CCE6BA',
 };
