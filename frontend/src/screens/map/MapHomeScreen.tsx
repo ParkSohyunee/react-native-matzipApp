@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
@@ -20,7 +20,7 @@ import {MapStackParamListType} from '@/components/navigations/stack/MapStackNavi
 import useUserLocation from '@/components/hooks/useUserLocation';
 import usePermission from '@/components/hooks/usePermission';
 
-import {colors} from '@/constants';
+import {colors, mapNavigators} from '@/constants';
 import mapStyle from '@/style/mapStyle';
 import CustomMarker from '@/components/CustomMarker';
 
@@ -35,7 +35,7 @@ export default function MapHomeScreen() {
   const mapRef = useRef<MapView | null>(null);
   const {userLocation, isUserLocationError} = useUserLocation();
   usePermission('LOCATION');
-  const [selectedLocation, setSelectedLocation] = useState<LatLng>();
+  const [selectedLocation, setSelectedLocation] = useState<LatLng | null>();
 
   // 길게 눌렀을 때 지도 좌표를 구하는 이벤트 핸들러
   const handleLongPressMapView = ({nativeEvent}: LongPressEvent) => {
@@ -55,6 +55,22 @@ export default function MapHomeScreen() {
       longitudeDelta: 0.0922,
       latitudeDelta: 0.0421,
     });
+  };
+
+  const handlePressAddPost = () => {
+    if (!selectedLocation) {
+      return Alert.alert(
+        '추가할 위치를 선택해주세요.',
+        '지도를 길게 누르면 위치가 선택됩니다.',
+      );
+    }
+    // 선택한 위치를 param으로 전달
+    // 추후 전달해야 할 정보가 많아지면 전역상태관리를 사용할 예정
+    navigation.navigate(mapNavigators.ADD_POST, {
+      location: selectedLocation,
+    });
+    // 장소추가 화면 이동 후 돌아왔을때는 선택한 위치 초기화
+    setSelectedLocation(null);
   };
 
   return (
@@ -88,7 +104,10 @@ export default function MapHomeScreen() {
         <Ionicons name="menu" size={24} color={colors.WHITE} />
       </Pressable>
       <View style={styles.buttonList}>
-        <Pressable style={styles.mapButton} onPress={handlePressUserLocation}>
+        <Pressable style={styles.button} onPress={handlePressAddPost}>
+          <MaterialIcons name="add" size={25} color={colors.WHITE} />
+        </Pressable>
+        <Pressable style={styles.button} onPress={handlePressUserLocation}>
           <MaterialIcons name="my-location" size={25} color={colors.WHITE} />
         </Pressable>
       </View>
@@ -121,7 +140,7 @@ const styles = StyleSheet.create({
     bottom: 30,
     right: 10,
   },
-  mapButton: {
+  button: {
     backgroundColor: colors.PINK_700,
     shadowColor: colors.BLACK,
     shadowOffset: {width: 1, height: 2},

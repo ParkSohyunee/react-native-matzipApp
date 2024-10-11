@@ -1,11 +1,14 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {LatLng} from 'react-native-maps';
 
 import {mapNavigators} from '@/constants';
 import MapHomeScreen from '@/screens/map/MapHomeScreen';
+import AddPostScreen from '@/screens/map/AddPostScreen';
 
 export type MapStackParamListType = {
   [mapNavigators.MAP_HOME]: undefined;
+  [mapNavigators.ADD_POST]: {location: LatLng};
 };
 
 const Stack = createStackNavigator<MapStackParamListType>();
@@ -34,6 +37,13 @@ export default function MapStackNavigator() {
         options={{
           headerTitle: ' ',
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={mapNavigators.ADD_POST}
+        component={AddPostScreen}
+        options={{
+          headerTitle: '장소 추가',
         }}
       />
     </Stack.Navigator>
