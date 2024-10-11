@@ -20,7 +20,7 @@ import {MapStackParamListType} from '@/components/navigations/stack/MapStackNavi
 import useUserLocation from '@/components/hooks/useUserLocation';
 import usePermission from '@/components/hooks/usePermission';
 
-import {colors, mapNavigators} from '@/constants';
+import {alerts, colors, mapNavigators} from '@/constants';
 import mapStyle from '@/style/mapStyle';
 import CustomMarker from '@/components/CustomMarker';
 
@@ -60,8 +60,8 @@ export default function MapHomeScreen() {
   const handlePressAddPost = () => {
     if (!selectedLocation) {
       return Alert.alert(
-        '추가할 위치를 선택해주세요.',
-        '지도를 길게 누르면 위치가 선택됩니다.',
+        alerts.NOT_SELECTED_LOCATION.TITLE,
+        alerts.NOT_SELECTED_LOCATION.DESCRIPTION,
       );
     }
     // 선택한 위치를 param으로 전달
